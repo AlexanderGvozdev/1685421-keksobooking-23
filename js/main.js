@@ -1,24 +1,18 @@
-const getRandom = function (min, max) {
-  const error = 'ошибка';
+const getRandomNumber = function (min, max) {
   if (min >= 0 && max > min) {
     const random = Math.random() * (max + 1 - min) + min;
     return Math.floor(random);
   }
-  else {
-    return error;
-  }
+  return Error('ошибка');
 };
 
-const getRandomFraction = function (min, max, fix) {
-  const error = 'ошибка';
+const getRandomFractionNumber = function (min, max, fix) {
   if (min >= 0 && max > min) {
     const newNumber = Math.random() * (max + 1 - min) + min;
     return Number(newNumber.toFixed(fix));
   }
-  else {
-    return error;
-  }
+  return Error('ошибка');
 };
 
-getRandom(0, 100);
-getRandomFraction(0, 100, 2);
+getRandomNumber(0, 100);
+getRandomFractionNumber(0, 100, 2);
