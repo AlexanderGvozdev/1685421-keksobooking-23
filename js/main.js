@@ -2,7 +2,8 @@ const photos = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/ke
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const hours = ['12:00','13:00','14:00'];
+const checkinHours = ['12:00','13:00','14:00'];
+const checkoutHours = ['12:00','13:00','14:00'];
 const typeHouse = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 
 const getRandomNumber = function (min, max) {
@@ -21,43 +22,43 @@ const getRandomFractionNumber = function (min, max, fix) {
   return Error('ошибка');
 };
 
+// Функция копирует, затем перемешивает массив в случайном порядке
+const getShuffledItems = (items) => items.slice().sort(() => Math.random() - 0.5);
+
+// Функция возвращает перемешенный массив до заданной длины массива
+const getRandomItems = (items, count) => {
+  const shuffledItems = getShuffledItems(items);
+  return shuffledItems.slice(0, count);
+};
+
 const createAnnouncement = function () {
 
   const typeOffer = typeHouse[3];
-  const checkinHour = hours[0];
-  const checkoutHour = hours[1];
-  const titleOffer = 'чтонить напишем';
-  const descriptionOffer = 'тут тоже';
-  const randomPrice = getRandomNumber(0, 50000);
-  const randomRooms = getRandomNumber(1, 3);
-  const randomGuests = getRandomNumber(0, 2);
+  const checkinHour = checkinHours[0];
+  const checkoutHour = checkoutHours[1];
   const latLocation = getRandomFractionNumber(35.65, 35.7, 5);
   const lngLocation = getRandomFractionNumber(139.7, 139.8, 5);
 
-  const createArrPhotos = (source, maxLength) =>
-    [...Array(1 + Math.random() * maxLength | 0)].map(() => source[Math.random() * source.length | 0]);
-  const arrPhoto = [...Array(1)].map(() => createArrPhotos(photos, 3));
-
-  const createArrFeatures = (source, maxLength) =>
-    [...Array(1 + Math.random() * maxLength | 0)].map(() => source[Math.random() * source.length | 0]);
-  const arrFeatures = [...Array(1)].map(() => createArrFeatures(features, 5));
-
   return {
     author: {
-      avatar: `img/avatars/user0${getRandomNumber(1, 8)}.png`,
+      avatar: `img/avatars/user0${getRandomNumber(1, 10)}.png`,
     },
     offer: {
-      title: titleOffer,
+      title: 'чтонить напишем',
       address: `${latLocation}, ${lngLocation}`,
-      price: randomPrice,
+      price: getRandomNumber(0, 50000),
       type: typeOffer,
-      rooms: randomRooms,
-      guests: randomGuests,
+      rooms: getRandomNumber(1, 3),
+      guests: getRandomNumber(0, 2),
       checkin: checkinHour,
       checkout: checkoutHour,
-      features: arrFeatures,
-      description: descriptionOffer,
-      photos: arrPhoto,
+      features: getRandomItems(
+        features,
+        getRandomNumber(1, features.length)),
+      description: 'тут тоже',
+      photos: getRandomItems(
+        photos,
+        getRandomNumber(1, photos.length)),
     },
     location : {
       lat: latLocation,
