@@ -1,10 +1,11 @@
+const QUANITITY_ANNOUNCEMENT = 10;
 const photos = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const checkinHours = ['12:00','13:00','14:00'];
 const checkoutHours = ['12:00','13:00','14:00'];
-const typeHouse = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const housesType = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 
 const getRandomNumber = function (min, max) {
   if (min >= 0 && max > min) {
@@ -33,9 +34,6 @@ const getRandomItems = (items, count) => {
 
 const createAnnouncement = function () {
 
-  const typeOffer = typeHouse[3];
-  const checkinHour = checkinHours[0];
-  const checkoutHour = checkoutHours[1];
   const latLocation = getRandomFractionNumber(35.65, 35.7, 5);
   const lngLocation = getRandomFractionNumber(139.7, 139.8, 5);
 
@@ -47,11 +45,11 @@ const createAnnouncement = function () {
       title: 'чтонить напишем',
       address: `${latLocation}, ${lngLocation}`,
       price: getRandomNumber(0, 50000),
-      type: typeOffer,
+      type: housesType[3],
       rooms: getRandomNumber(1, 3),
       guests: getRandomNumber(0, 2),
-      checkin: checkinHour,
-      checkout: checkoutHour,
+      checkin: checkinHours[0],
+      checkout: checkoutHours[1],
       features: getRandomItems(
         features,
         getRandomNumber(1, features.length)),
@@ -67,5 +65,4 @@ const createAnnouncement = function () {
   };
 };
 
-const QUANITITY_ANNOUNCEMENT = 10;
-const createAnnon = new Array(QUANITITY_ANNOUNCEMENT).fill(null).map(() => createAnnouncement());
+new Array(QUANITITY_ANNOUNCEMENT).fill(null).map(() => createAnnouncement());
