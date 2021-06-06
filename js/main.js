@@ -39,10 +39,13 @@ const createAnnouncement = function () {
   const lngLocation = getRandomFractionNumber(139.7, 139.8, 5);
   const userAvatar = AVATARS[(Math.floor(Math.random() * (AVATARS.length)))];
 
-
-  const createArr = (source, maxLength) =>
+  const createArrPhotos = (source, maxLength) =>
     [...Array(1 + Math.random() * maxLength | 0)].map(() => source[Math.random() * source.length | 0]);
-  const arrPhoto = [...Array(1)].map(() => createArr(PHOTOS, 3));
+  const arrPhoto = [...Array(1)].map(() => createArrPhotos(PHOTOS, 3));
+
+  const createArrFeatures = (source, maxLength) =>
+    [...Array(1 + Math.random() * maxLength | 0)].map(() => source[Math.random() * source.length | 0]);
+  const arrFeatures = [...Array(1)].map(() => createArrFeatures(FEATURES, 5));
 
   return {
     author: {
@@ -57,7 +60,7 @@ const createAnnouncement = function () {
       guests: randomGuests,
       checkin: checkinHour,
       checkout: checkoutHour,
-      features: [],
+      features: arrFeatures,
       description: descriptionOffer,
       photos: arrPhoto,
     },
