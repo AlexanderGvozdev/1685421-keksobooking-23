@@ -1,11 +1,11 @@
-const QUANITITY_ANNOUNCEMENT = 10;
+const ANNOUNCEMENT_QUANTITY = 10;
 const photos = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const checkinHours = ['12:00','13:00','14:00'];
-const checkoutHours = ['12:00','13:00','14:00'];
-const housesType = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const hourCheckin = ['12:00','13:00','14:00'];
+const hourCheckout = ['12:00','13:00','14:00'];
+const houseType = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 
 const getRandomNumber = function (min, max) {
   if (min >= 0 && max > min) {
@@ -36,6 +36,8 @@ const createAnnouncement = function () {
 
   const latLocation = getRandomFractionNumber(35.65, 35.7, 5);
   const lngLocation = getRandomFractionNumber(139.7, 139.8, 5);
+  const randomHourIn = Math.floor(Math.random() * hourCheckin.length);
+  const randomHourOut = Math.floor(Math.random() * hourCheckout.length);
 
   return {
     author: {
@@ -45,11 +47,11 @@ const createAnnouncement = function () {
       title: 'чтонить напишем',
       address: `${latLocation}, ${lngLocation}`,
       price: getRandomNumber(0, 50000),
-      type: housesType[3],
+      type: houseType[3],
       rooms: getRandomNumber(1, 3),
       guests: getRandomNumber(0, 2),
-      checkin: checkinHours[0],
-      checkout: checkoutHours[1],
+      checkin: `${hourCheckin[randomHourIn]}`,
+      checkout: `${hourCheckout[randomHourOut]}`,
       features: getRandomItems(
         features,
         getRandomNumber(1, features.length)),
@@ -65,4 +67,4 @@ const createAnnouncement = function () {
   };
 };
 
-new Array(QUANITITY_ANNOUNCEMENT).fill(null).map(() => createAnnouncement());
+new Array(ANNOUNCEMENT_QUANTITY).fill(null).map(() => createAnnouncement());
