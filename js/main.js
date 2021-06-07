@@ -5,22 +5,20 @@ const photos = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/ke
 const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const checkinHours = ['12:00','13:00','14:00'];
 const checkoutHours = ['12:00','13:00','14:00'];
-const houseType = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const houseTypes = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 
-const getRandomNumber = function (min, max) {
-  if (min >= 0 && max > min) {
-    const random = Math.random() * (max + 1 - min) + min;
-    return Math.floor(random);
-  }
-  return Error('ошибка');
+const getRandomNumber = (min, max) => {
+  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
+  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
 };
 
-const getRandomFractionNumber = function (min, max, fix) {
-  if (min >= 0 && max > min) {
-    const newNumber = Math.random() * (max + 1 - min) + min;
-    return Number(newNumber.toFixed(fix));
-  }
-  return Error('ошибка');
+const getRandomFractionNumber = (min, max, digits = 1) => {
+  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
+  const upper = Math.max(Math.abs(min), Math.abs(max));
+  const result = Math.random() * (upper - lower) + lower;
+  return result.toFixed(digits);
 };
 
 // Функция копирует, затем перемешивает массив в случайном порядке
@@ -36,9 +34,6 @@ const createAnnouncement = function () {
 
   const latLocation = getRandomFractionNumber(35.65, 35.7, 5);
   const lngLocation = getRandomFractionNumber(139.7, 139.8, 5);
-  const randomHourIn = Math.floor(Math.random() * checkinHours.length);
-  const randomHourOut = Math.floor(Math.random() * checkoutHours.length);
-  const randomHouseType = Math.floor(Math.random() * houseType.length);
 
   return {
     author: {
@@ -48,11 +43,11 @@ const createAnnouncement = function () {
       title: 'чтонить напишем',
       address: `${latLocation}, ${lngLocation}`,
       price: getRandomNumber(0, 50000),
-      type: `${houseType[randomHouseType]}`,
+      type: getRandomItems(houseTypes, getRandomNumber(1, 1)),
       rooms: getRandomNumber(1, 3),
       guests: getRandomNumber(0, 2),
-      checkin: `${checkinHours[randomHourIn]}`,
-      checkout: `${checkoutHours[randomHourOut]}`,
+      checkin: getRandomItems(checkinHours, getRandomNumber(1, 1)),
+      checkout: getRandomItems(checkoutHours, getRandomNumber(1, 1)),
       features: getRandomItems(
         features,
         getRandomNumber(1, features.length)),
