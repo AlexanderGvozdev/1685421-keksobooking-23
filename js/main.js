@@ -3,8 +3,8 @@ const photos = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/ke
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const hourCheckin = ['12:00','13:00','14:00'];
-const hourCheckout = ['12:00','13:00','14:00'];
+const checkinHours = ['12:00','13:00','14:00'];
+const checkoutHours = ['12:00','13:00','14:00'];
 const houseType = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 
 const getRandomNumber = function (min, max) {
@@ -36,8 +36,8 @@ const createAnnouncement = function () {
 
   const latLocation = getRandomFractionNumber(35.65, 35.7, 5);
   const lngLocation = getRandomFractionNumber(139.7, 139.8, 5);
-  const randomHourIn = Math.floor(Math.random() * hourCheckin.length);
-  const randomHourOut = Math.floor(Math.random() * hourCheckout.length);
+  const randomHourIn = Math.floor(Math.random() * checkinHours.length);
+  const randomHourOut = Math.floor(Math.random() * checkoutHours.length);
   const randomHouseType = Math.floor(Math.random() * houseType.length);
 
   return {
@@ -51,8 +51,8 @@ const createAnnouncement = function () {
       type: `${houseType[randomHouseType]}`,
       rooms: getRandomNumber(1, 3),
       guests: getRandomNumber(0, 2),
-      checkin: `${hourCheckin[randomHourIn]}`,
-      checkout: `${hourCheckout[randomHourOut]}`,
+      checkin: `${checkinHours[randomHourIn]}`,
+      checkout: `${checkoutHours[randomHourOut]}`,
       features: getRandomItems(
         features,
         getRandomNumber(1, features.length)),
