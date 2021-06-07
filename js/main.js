@@ -38,6 +38,7 @@ const createAnnouncement = function () {
   const lngLocation = getRandomFractionNumber(139.7, 139.8, 5);
   const randomHourIn = Math.floor(Math.random() * hourCheckin.length);
   const randomHourOut = Math.floor(Math.random() * hourCheckout.length);
+  const randomHouseType = Math.floor(Math.random() * houseType.length);
 
   return {
     author: {
@@ -47,7 +48,7 @@ const createAnnouncement = function () {
       title: 'чтонить напишем',
       address: `${latLocation}, ${lngLocation}`,
       price: getRandomNumber(0, 50000),
-      type: houseType[3],
+      type: `${houseType[randomHouseType]}`,
       rooms: getRandomNumber(1, 3),
       guests: getRandomNumber(0, 2),
       checkin: `${hourCheckin[randomHourIn]}`,
