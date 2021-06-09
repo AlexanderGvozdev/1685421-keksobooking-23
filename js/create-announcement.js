@@ -1,8 +1,5 @@
-import {getRandomNumber, getRandomFractionNumber} from './random-number.js';
-import {getRandomItems} from './random-massive.js';
+import {getRandomNumber, getRandomFractionNumber, getRandomItems} from './util-function.js';
 
-
-const ANNOUNCEMENT_QUANTITY = 10;
 const photos = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
@@ -48,4 +45,3 @@ const createAnnouncement = function () {
 const moreAnnouncement = (count) => new Array(count).fill(null).map(() => createAnnouncement());
 
 export {moreAnnouncement};
-export {ANNOUNCEMENT_QUANTITY};
