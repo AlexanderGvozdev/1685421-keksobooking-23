@@ -42,6 +42,6 @@ const createAnnouncement = function () {
   };
 };
 
-const moreAnnouncement = (count) => new Array(count).fill(null).map(() => createAnnouncement());
+const createOffers = (count) => new Array(count).fill(null).map(() => createAnnouncement());
 
-export {moreAnnouncement};
+export {createOffers};
