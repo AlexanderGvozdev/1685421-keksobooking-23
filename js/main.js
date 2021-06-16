@@ -1,4 +1,2 @@
-import {createOffers} from './create-announcement.js';
-const ANNOUNCEMENT_QUANTITY = 10;
-
-window.someFN = createOffers(ANNOUNCEMENT_QUANTITY);
+import './create-elem.js';
+import './create-announcement.js';
