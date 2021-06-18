@@ -13,10 +13,12 @@ const createAnnouncement = function () {
 
   const latLocation = getRandomFractionNumber(35.65, 35.7, 5);
   const lngLocation = getRandomFractionNumber(139.7, 139.8, 5);
+  const avatarNumber = getRandomNumber(1, 11);
+  const avatarImage = avatarNumber < 10 ? `img/avatars/user0${avatarNumber}.png`: `img/avatars/user${avatarNumber}.png`;
 
   return {
     author: {
-      avatar: `img/avatars/user0${getRandomNumber(1, 10)}.png`,
+      avatar: avatarImage,
     },
     offer: {
       title: 'чтонить напишем',
