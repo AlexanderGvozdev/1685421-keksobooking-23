@@ -1,2 +1,2 @@
-import './create-elem.js';
+import './create-element.js';
 import './create-announcement.js';

@@ -1,9 +1,8 @@
 import {createOffers} from './create-announcement.js';
-const ANNOUNCEMENT_QUANTITY = 10;
 const popup = document.querySelector('#card').content.querySelector('.popup');
 const mapOffers = document.querySelector('#map-canvas');
 
-const createElement = window.someFN = createOffers(ANNOUNCEMENT_QUANTITY);
+const createElement = createOffers();
 createElement.forEach(({offer, author}) => {
 
   const popupElement = popup.cloneNode(true);
@@ -12,7 +11,6 @@ createElement.forEach(({offer, author}) => {
   popupElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
   popupElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
   popupElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
-  popupElement.querySelector('.popup__features').textContent = offer.features;
   popupElement.querySelector('.popup__description').textContent = offer.description;
   popupElement.querySelector('.popup__avatar').src = author.avatar;
   popupElement.querySelector('.popup__type').textContent = offer.type;
@@ -27,8 +25,21 @@ createElement.forEach(({offer, author}) => {
     });
   };
 
+  const featuresList = popupElement.querySelector('.popup__features');
+  const createFeaturesList = (features, list) => {
+    features.forEach((element) => {
+      const feature = document.createElement('li');
+      const classNameModifier = `popup__feature--${element}`;
+      feature.classList.add('popup__feature', classNameModifier);
+      list.appendChild(feature);
+    });
+  };
+
   photosList.innerHTML = '';
   createPhotosList(offer.photos, photosList);
+
+  featuresList.innerHTML = '';
+  createFeaturesList(offer.features, featuresList);
 
   const removeEmptyHtmlElements = (data) => {
     const elements = Array.from(data.children);
@@ -38,7 +49,7 @@ createElement.forEach(({offer, author}) => {
       }
     });
   };
-  mapOffers.appendChild(popupElement);
-  removeEmptyHtmlElements(popupElement);
 
+  removeEmptyHtmlElements(popupElement);
+  mapOffers.appendChild(popupElement);
 });
