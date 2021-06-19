@@ -6,7 +6,13 @@ const photos = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/ke
 const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const checkinHours = ['12:00','13:00','14:00'];
 const checkoutHours = ['12:00','13:00','14:00'];
-const houseTypes = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const houseTypes = {
+  'flat': 'Квартира',
+  'bungalow': 'Бунгало',
+  'house': 'Дом',
+  'palace': 'Дворец',
+  'hotel': 'Отель',
+};
 
 
 const createAnnouncement = function () {
@@ -14,7 +20,11 @@ const createAnnouncement = function () {
   const latLocation = getRandomFractionNumber(35.65, 35.7, 5);
   const lngLocation = getRandomFractionNumber(139.7, 139.8, 5);
   const avatarNumber = getRandomNumber(1, 11);
+  const roomQuantity = getRandomNumber(1, 3);
+  const guestsQuantity = getRandomNumber(0, 2);
   const avatarImage = avatarNumber < 10 ? `img/avatars/user0${avatarNumber}.png`: `img/avatars/user${avatarNumber}.png`;
+  const room =  roomQuantity < 2 ? `${roomQuantity}  комната`: `${roomQuantity} комнаты`;
+  const guest = guestsQuantity < 2 ? `${guestsQuantity} гостя` : `${guestsQuantity} гостей`;
 
   return {
     author: {
@@ -25,8 +35,8 @@ const createAnnouncement = function () {
       address: `${latLocation}, ${lngLocation}`,
       price: getRandomNumber(0, 50000),
       type: getRandomItems(houseTypes, getRandomNumber(1, 1)),
-      rooms: getRandomNumber(1, 3),
-      guests: getRandomNumber(0, 2),
+      rooms: room,
+      guests: guest,
       checkin: getRandomItems(checkinHours, getRandomNumber(1, 1)),
       checkout: getRandomItems(checkoutHours, getRandomNumber(1, 1)),
       features: getRandomItems(
@@ -46,4 +56,4 @@ const createAnnouncement = function () {
 
 const createOffers = (count) => new Array(count).fill(null).map(() => createAnnouncement());
 
-export {createOffers};
+export {createOffers, houseTypes};
