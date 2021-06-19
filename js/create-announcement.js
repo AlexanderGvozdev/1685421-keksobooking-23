@@ -6,13 +6,7 @@ const photos = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/ke
 const features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const checkinHours = ['12:00','13:00','14:00'];
 const checkoutHours = ['12:00','13:00','14:00'];
-const houseTypes = {
-  'flat': 'Квартира',
-  'bungalow': 'Бунгало',
-  'house': 'Дом',
-  'palace': 'Дворец',
-  'hotel': 'Отель',
-};
+const houseTypes = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 
 
 const createAnnouncement = function () {
@@ -56,4 +50,4 @@ const createAnnouncement = function () {
 
 const createOffers = (count) => new Array(count).fill(null).map(() => createAnnouncement());
 
-export {createOffers, houseTypes};
+export {createOffers};

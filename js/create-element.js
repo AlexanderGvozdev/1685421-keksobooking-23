@@ -1,6 +1,14 @@
-import {createOffers, houseTypes} from './create-announcement.js';
+import {createOffers} from './create-announcement.js';
 const popup = document.querySelector('#card').content.querySelector('.popup');
 const mapOffers = document.querySelector('#map-canvas');
+
+const offerTypeToReadable = {
+  'flat': 'Квартира',
+  'bungalow': 'Бунгало',
+  'house': 'Дом',
+  'palace': 'Дворец',
+  'hotel': 'Отель',
+};
 
 const createElement = createOffers();
 createElement.forEach(({offer, author}) => {
@@ -13,7 +21,7 @@ createElement.forEach(({offer, author}) => {
   popupElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
   popupElement.querySelector('.popup__description').textContent = offer.description;
   popupElement.querySelector('.popup__avatar').src = author.avatar;
-  popupElement.querySelector('.popup__type').textContent = houseTypes[offer.type];
+  popupElement.querySelector('.popup__type').textContent = offerTypeToReadable[offer.type];
 
   const photosList = popupElement.querySelector('.popup__photos');
   const createPhotosList = (photos, list) => {
