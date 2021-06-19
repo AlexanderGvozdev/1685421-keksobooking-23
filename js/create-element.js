@@ -2,7 +2,7 @@ import {createOffers} from './create-announcement.js';
 const popup = document.querySelector('#card').content.querySelector('.popup');
 const mapOffers = document.querySelector('#map-canvas');
 
-const offerTypeToReadable = {
+const OFFER_TYPE_TO_READABLE = {
   'flat': 'Квартира',
   'bungalow': 'Бунгало',
   'house': 'Дом',
@@ -21,7 +21,7 @@ createElement.forEach(({offer, author}) => {
   popupElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
   popupElement.querySelector('.popup__description').textContent = offer.description;
   popupElement.querySelector('.popup__avatar').src = author.avatar;
-  popupElement.querySelector('.popup__type').textContent = offerTypeToReadable[offer.type];
+  popupElement.querySelector('.popup__type').textContent = OFFER_TYPE_TO_READABLE[offer.type];
 
   const photosList = popupElement.querySelector('.popup__photos');
   const createPhotosList = (photos, list) => {
@@ -61,3 +61,8 @@ createElement.forEach(({offer, author}) => {
   removeEmptyHtmlElements(popupElement);
   mapOffers.appendChild(popupElement);
 });
+
+/* требований к окончаниям нигде не указано вроде как,
+ и на данном этапе немного затрудняюсь их сделать более правильно чем есть.
+ Там где ты ссылался на ТЗ это же задание для 8-го раздела разве нет?
+ там и сделаю, или дальше как ДЗ скажет */
