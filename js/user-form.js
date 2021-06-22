@@ -8,6 +8,10 @@ const title = document.querySelector('#title');
 const price = document.querySelector('#price');
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
+const form = document.querySelector('ad-form');
+const main = document.querySelector('.main');
+const errorMessage = document.querySelector('#error').content.querySelector('.error');
+
 
 title.addEventListener('input', () => {
   const valueLength = title.value.length;
@@ -48,6 +52,37 @@ const capacityChangeHandler = () => {
 
   capacity.reportValidity();
 };
+
+
+const createMessage = (template) => {
+  const message = template.cloneNode(true);
+
+  main.appendChild(message);
+  message.tabIndex = 0;
+  message.focus();
+};
+
+const showErrorMessages = () => {
+  createMessage(errorMessage);
+};
+
+const validateFields = () => {
+  if (title.checkValidity() === false) {}
+  /* запутался в проверке валидации при отправке,вроде же итак проверяет т.к. required указан
+   и то что выше написал на гостей комнаты и прочие проверки
+    ( рамка опять же подсвечивается при неправильных данных в инпутах этих),
+     вообще верным путём иду? подскажи пжлст
+  */
+};
+
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  if(validateFields) {
+    form.submit();
+    return;
+  }
+  showErrorMessages();
+});
 
 price.addEventListener('invalid', priceValidityHandler);
 capacity.addEventListener('change', capacityChangeHandler);
