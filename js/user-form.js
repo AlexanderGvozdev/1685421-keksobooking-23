@@ -1,5 +1,3 @@
-const MIN_TITLE_LENGTH = 30;
-const MAX_TITLE_LENGTH = 100;
 const PRICE_MAX = 1000000;
 const MIN_QUANTITY_GUESTS = 0;
 const MAX_QUANTITY_GUESTS = 100;
@@ -12,22 +10,6 @@ const form = document.querySelector('ad-form');
 const main = document.querySelector('.main');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
 
-
-title.addEventListener('input', () => {
-  const valueLength = title.value.length;
-
-  if (valueLength < MIN_TITLE_LENGTH) {
-    title.setCustomValidity(`Ещё ${  MIN_TITLE_LENGTH - valueLength } символов`);
-
-  } else if (valueLength > MAX_TITLE_LENGTH) {
-    title.setCustomValidity(`Удалите лишние ${  valueLength - MAX_TITLE_LENGTH } символы`);
-
-  } else {
-    title.setCustomValidity('');
-
-  }
-  title.reportValidity();
-});
 
 const priceValidityHandler = () => {
   if (price.validity.valueMissing) {
@@ -68,11 +50,7 @@ const showErrorMessages = () => {
 
 const validateFields = () => {
   if (title.checkValidity() === false) {}
-  /* запутался в проверке валидации при отправке,вроде же итак проверяет т.к. required указан
-   и то что выше написал на гостей комнаты и прочие проверки
-    ( рамка опять же подсвечивается при неправильных данных в инпутах этих),
-     вообще верным путём иду? подскажи пжлст
-  */
+
 };
 
 form.addEventListener('submit', (evt) => {
