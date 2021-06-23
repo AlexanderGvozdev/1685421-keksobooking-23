@@ -1,53 +1,39 @@
-const MIN_QUANTITY_GUESTS = 0;
-const MAX_QUANTITY_GUESTS = 100;
+const PRICE_MAX = 1000000;
 
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
-const form = document.querySelector('ad-form');
-const main = document.querySelector('.main');
-const errorMessage = document.querySelector('#error').content.querySelector('.error');
+const price = document.querySelector('#price');
 
+const priceValidityHandler = () => {
+  if (price.validity.valueMissing) {
+    price.setCustomValidity(`Укажите цену. Максимальная цена — ${PRICE_MAX}`);
+  } else {
+    price.setCustomValidity('');
+  }
+};
+
+if (roomNumber.value === '1') {
+  capacity.options[2].selected = true;
+}
 const capacityChangeHandler = () => {
-  const roomNumberValue = Number(roomNumber.value);
-  const capacityValue = Number(capacity.value);
-
-  if (roomNumberValue < MAX_QUANTITY_GUESTS && capacityValue < 1 || capacityValue > roomNumberValue) {
-    capacity.setCustomValidity(`Укажите количество гостей. Минимум - 1.
-    Максимум - ${roomNumber.value}`);
-  } else if (roomNumberValue >= MAX_QUANTITY_GUESTS && capacityValue > MIN_QUANTITY_GUESTS) {
-    capacity.setCustomValidity('Слишком много комнат. Выберите пункт "не для гостей"');
+  if (roomNumber.value === '1' && capacity.value !== '1') {
+    capacity.setCustomValidity('жильё для одного гостя');
+  } else if (roomNumber.value === '2' && capacity.value !== '1' && capacity.value !== '2') {
+    capacity.setCustomValidity('вмещает от 1 до 2 гостей');
+  } else if (roomNumber.value === '3' && capacity.value === '0') {
+    capacity.setCustomValidity('вмещает от 1 до 3 гостей');
+  } else if (roomNumber.value === '100' && capacity.value !== '0') {
+    capacity.setCustomValidity('Жильё не для гостей');
   } else {
     capacity.setCustomValidity('');
   }
-
   capacity.reportValidity();
 };
 
-
-const createMessage = (template) => {
-  const message = template.cloneNode(true);
-
-  main.appendChild(message);
-  message.tabIndex = 0;
-  message.focus();
-};
-
-const showErrorMessages = () => {
-  createMessage(errorMessage);
-};
-
-const validateFields = () => {
-  if (capacity.checkValidity() === false) {}
-
-};
-
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if(validateFields) {
-    form.submit();
-    return;
-  }
-  showErrorMessages();
-});
-
+roomNumber.addEventListener('change', capacityChangeHandler);
 capacity.addEventListener('change', capacityChangeHandler);
+price.addEventListener('invalid', priceValidityHandler);
+/* не совсем понял что ты написал про обработчики, похожие примеры в инернете видел с ними же,
+люди на курсе вроде также делают, спрашивал
+в остальном технически ДЗ выполнил по идее, нужные формы валидированы
+и не отправляются если неправильно заполнены */
