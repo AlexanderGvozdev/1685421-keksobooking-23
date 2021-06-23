@@ -1,23 +1,11 @@
-const PRICE_MAX = 1000000;
 const MIN_QUANTITY_GUESTS = 0;
 const MAX_QUANTITY_GUESTS = 100;
 
-const title = document.querySelector('#title');
-const price = document.querySelector('#price');
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
 const form = document.querySelector('ad-form');
 const main = document.querySelector('.main');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
-
-
-const priceValidityHandler = () => {
-  if (price.validity.valueMissing) {
-    price.setCustomValidity(`Укажите цену. Максимальная цена — ${PRICE_MAX}`);
-  } else {
-    price.setCustomValidity('');
-  }
-};
 
 const capacityChangeHandler = () => {
   const roomNumberValue = Number(roomNumber.value);
@@ -49,7 +37,7 @@ const showErrorMessages = () => {
 };
 
 const validateFields = () => {
-  if (title.checkValidity() === false) {}
+  if (capacity.checkValidity() === false) {}
 
 };
 
@@ -62,5 +50,4 @@ form.addEventListener('submit', (evt) => {
   showErrorMessages();
 });
 
-price.addEventListener('invalid', priceValidityHandler);
 capacity.addEventListener('change', capacityChangeHandler);
