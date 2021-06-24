@@ -33,7 +33,6 @@ const capacityChangeHandler = () => {
 roomNumber.addEventListener('change', capacityChangeHandler);
 capacity.addEventListener('change', capacityChangeHandler);
 price.addEventListener('invalid', priceValidityHandler);
-/* не совсем понял что ты написал про обработчики, похожие примеры в инернете видел с ними же,
-люди на курсе вроде также делают, спрашивал
-в остальном технически ДЗ выполнил по идее, нужные формы валидированы
-и не отправляются если неправильно заполнены */
+/* про обработчики запомнил, решу в ходе дальнейшей работы
+про гостей пока что только так смог решить, может в будущем
+подумаю и найду способ сделать получше */
