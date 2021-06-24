@@ -1,8 +1,22 @@
 const PRICE_MAX = 1000000;
 
+const housingPrice = {
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000,
+};
+
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
 const price = document.querySelector('#price');
+const housingType = document.querySelector('#type');
+
+const typeChangeHandler = () => {
+  price.placeholder = housingPrice[housingType.value];
+  price.min = housingPrice[housingType.value];
+};
 
 const priceValidityHandler = () => {
   if (price.validity.valueMissing) {
@@ -33,6 +47,7 @@ const capacityChangeHandler = () => {
 roomNumber.addEventListener('change', capacityChangeHandler);
 capacity.addEventListener('change', capacityChangeHandler);
 price.addEventListener('invalid', priceValidityHandler);
+housingType.addEventListener('change', typeChangeHandler);
 /* про обработчики запомнил, решу в ходе дальнейшей работы
 про гостей пока что только так смог решить, может в будущем
 подумаю и найду способ сделать получше */
