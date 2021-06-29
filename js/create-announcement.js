@@ -50,4 +50,4 @@ const createAnnouncement = function () {
 
 const createOffers = (count) => new Array(count).fill(null).map(() => createAnnouncement());
 
-export {createOffers};
+export {createOffers, createAnnouncement};

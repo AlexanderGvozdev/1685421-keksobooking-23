@@ -21,4 +21,13 @@ const getRandomFractionNumber = (min, max, digits = 1) => {
   return result.toFixed(digits);
 };
 
-export {getRandomNumber, getRandomFractionNumber, getRandomItems};
+const removeEmptyHtmlElements = (data) => {
+  const elements = Array.from(data.children);
+  elements.forEach((element) => {
+    if (element.src === '' || (element.innerHTML === '' && element.tagName.toLowerCase() !== 'img')) {
+      element.remove();
+    }
+  });
+};
+
+export {getRandomNumber, getRandomFractionNumber, getRandomItems, removeEmptyHtmlElements};
