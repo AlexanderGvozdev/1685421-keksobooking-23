@@ -12,8 +12,8 @@ const MapSettings = {
   OSM_URL: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   OSM_ATTRIBUTION: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   ICON_URL: {
-    MAIN: '/img/main-pin.svg',
-    REGULAR: '/img/pin.svg',
+    MAIN: './img/main-pin.svg',
+    REGULAR: './img/pin.svg',
   },
   ICON_SIZE_MAIN: {
     WIDTH: 52,
@@ -124,3 +124,5 @@ const initMap = () => {
 };
 
 export {initMap};
+
+// по остальному, пока что сделал как знаю
