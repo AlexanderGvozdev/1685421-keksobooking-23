@@ -30,4 +30,6 @@ const removeEmptyHtmlElements = (data) => {
   });
 };
 
-export {getRandomNumber, getRandomFractionNumber, getRandomItems, removeEmptyHtmlElements};
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+
+export {getRandomNumber, getRandomFractionNumber, getRandomItems, removeEmptyHtmlElements, isEscEvent};
