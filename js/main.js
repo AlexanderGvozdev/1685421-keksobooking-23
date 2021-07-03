@@ -7,3 +7,4 @@ import {initMap} from './map.js';
 getBlockForms();
 
 initMap();
+// сделал как мог, как лучше - не знаю))

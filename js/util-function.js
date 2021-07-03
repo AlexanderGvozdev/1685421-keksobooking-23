@@ -30,6 +30,25 @@ const removeEmptyHtmlElements = (data) => {
   });
 };
 
-const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
+const listenerCloneNodes = (node) => {
+  const cloneNode = node.cloneNode(true);
+  const buttonNode = cloneNode.querySelector('.error__button');
+  const body = document.querySelector('body');
+  body.insertAdjacentElement('beforeend', cloneNode);
 
-export {getRandomNumber, getRandomFractionNumber, getRandomItems, removeEmptyHtmlElements, isEscEvent};
+  document.addEventListener('keydown', (evt) => {
+    if (evt.keyCode === 27 && cloneNode) {
+      cloneNode.remove();
+    }
+  });
+
+  document.addEventListener('click', (evt) => {
+    if (evt.target === cloneNode) {
+      cloneNode.remove();
+    } else if (buttonNode) {
+      cloneNode.remove();
+    }
+  });
+};
+
+export {getRandomNumber, getRandomFractionNumber, getRandomItems, removeEmptyHtmlElements, listenerCloneNodes};

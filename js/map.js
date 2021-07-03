@@ -1,11 +1,18 @@
 import {getActiveForms} from './form-disabled.js';
-import {createOffers, createAnnouncement} from './create-announcement.js';
 import {createCardAnnouncement} from './create-element.js';
+import {getData, sendData} from './api.js';
+import {showServerError} from './message.js';
+import {listenerCloneNodes} from './util-function.js';
 
 const NUMBER_OF_DECIMALS = 5;
-const ANNOUNCEMENT_QUANTITY = 10;
 
-const MapSettings = {
+const resetButton = document.querySelector('.ad-form__reset');
+const adFormNode = document.querySelector('.ad-form');
+const address = document.querySelector('#address');
+const succes = document.querySelector('#success').content.querySelector('.success');
+const error = document.querySelector('#error').content.querySelector('.error');
+
+const MapSetting = {
   LAT: 35.68951,
   LNG: 139.69201,
   ZOOM: 12,
@@ -23,10 +30,10 @@ const MapSettings = {
     WIDTH: 40,
     HEIGHT: 40,
   },
+  ANNOUNCEMENT_QUANTITY: 10,
+  MESSAGE_ALERT: 'Не удалось получить данные от сервера. Попробуйте позже.',
+  MESSAGE_COLOR: '#ff5635',
 };
-
-const resetButton = document.querySelector('.ad-form__reset');
-const address = document.querySelector('#address');
 
 const initMap = () => {
   const map = L.map('map-canvas')
@@ -35,13 +42,13 @@ const initMap = () => {
     })
     .setView(
       {
-        lat: MapSettings.LAT,
-        lng: MapSettings.LNG,
+        lat: MapSetting.LAT,
+        lng: MapSetting.LNG,
       },
-      MapSettings.ZOOM,
+      MapSetting.ZOOM,
     );
 
-  const mapLayer = L.tileLayer(MapSettings.OSM_URL, { attribution: MapSettings.OSM_ATTRIBUTION });
+  const mapLayer = L.tileLayer(MapSetting.OSM_URL, { attribution: MapSetting.OSM_ATTRIBUTION });
 
   // Функция генерации Иконок
   const getPinIcon = (url, width, heigth) => {
@@ -69,14 +76,15 @@ const initMap = () => {
     return pinMarker;
   };
 
+  // Стили для главного Маркера
   const mainMarker = getPinMarker(
-    MapSettings.LAT,
-    MapSettings.LNG,
+    MapSetting.LAT,
+    MapSetting.LNG,
     true,
-    getPinIcon(MapSettings.ICON_URL.MAIN, MapSettings.ICON_SIZE_MAIN.WIDTH, MapSettings.ICON_SIZE_MAIN.HEIGHT),
+    getPinIcon(MapSetting.ICON_URL.MAIN, MapSetting.ICON_SIZE_MAIN.WIDTH, MapSetting.ICON_SIZE_MAIN.HEIGHT),
   );
 
-  // Слушатель на Красный Маркер
+  // Слушатель на главный Маркер
   mainMarker.on('move', (evt) => {
     address.readOnly = true;
     address.value = `${mainMarker._latlng.lat}, ${mainMarker._latlng.lng}`;
@@ -84,41 +92,72 @@ const initMap = () => {
     address.value = `${lat.toFixed(NUMBER_OF_DECIMALS)}, ${lng.toFixed(NUMBER_OF_DECIMALS)}`;
   });
 
-  // Выводит объекты на карте
-  const points = createOffers(ANNOUNCEMENT_QUANTITY);
-  points.forEach((item) => {
-    const { lat, lng } = item.location;
-    const createCustomPopup = createCardAnnouncement(createAnnouncement());
-
-    const regularMarker = getPinMarker(
-      lat,
-      lng,
-      true,
-      getPinIcon(MapSettings.ICON_URL.REGULAR, MapSettings.ICON_SIZE_REGULAR.WIDTH, MapSettings.ICON_SIZE_REGULAR.HEIGHT),
-    );
-
-    const marker = regularMarker;
-    marker.addTo(map).bindPopup(createCustomPopup, {
-      keepInView: true,
-    });
-  });
-
-  // Кнопка "Очистить"
-  resetButton.addEventListener('click', () => {
+  // Сброс Маркера в исходное состояние
+  const resetMarker = () => {
     mainMarker.setLatLng({
-      lat: MapSettings.LAT,
-      lng: MapSettings.LNG,
+      lat: MapSetting.LAT,
+      lng: MapSetting.LNG,
     });
 
     map.setView(
       {
-        lat: MapSettings.LAT,
-        lng: MapSettings.LNG,
+        lat: MapSetting.LAT,
+        lng: MapSetting.LNG,
       },
-      MapSettings.ZOOM,
+      MapSetting.ZOOM,
     );
+  };
+
+  // Функция рендера объектов
+  const renderOffers = (offers) => {
+    offers.forEach((item) => {
+      const {lat, lng} = item.location;
+      const createCustomPopup = createCardAnnouncement(item);
+
+      const regularMarker = getPinMarker(
+        lat,
+        lng,
+        true,
+        getPinIcon(MapSetting.ICON_URL.REGULAR, MapSetting.ICON_SIZE_REGULAR.WIDTH, MapSetting.ICON_SIZE_REGULAR.HEIGHT),
+      );
+
+      const marker = regularMarker;
+      marker.addTo(map).bindPopup(createCustomPopup, {
+        keepInView: true,
+      });
+    });
+  };
+
+  // Функция обрезания прилетающих объектов до заданных параметров
+  const createOffers = (offers) => {
+    const cutOffers = offers.slice(0, MapSetting.ANNOUNCEMENT_QUANTITY);
+    renderOffers(cutOffers);
+  };
+
+  // Функция отправки данных на сервер
+  const sendNewOffer = (node) => {
+    node.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+
+      const formData = new FormData(node);
+
+      sendData(
+        () => {
+          listenerCloneNodes(succes), node.reset();
+        },
+        () => listenerCloneNodes(error),
+        formData,
+      );
+    });
+  };
+
+  // Кнопка "Очистить"
+  resetButton.addEventListener('click', () => {
+    resetMarker();
   });
 
+  getData(createOffers, () => showServerError(MapSetting.MESSAGE_ALERT, MapSetting.MESSAGE_COLOR));
+  sendNewOffer(adFormNode);
   mapLayer.addTo(map);
   mainMarker.addTo(map);
 };
