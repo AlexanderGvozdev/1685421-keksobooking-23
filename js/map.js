@@ -2,14 +2,14 @@ import {getActiveForms} from './form-disabled.js';
 import {createCardAnnouncement} from './create-element.js';
 import {getData, sendData} from './api.js';
 import {showServerError} from './message.js';
-import {listenerCloneNodes} from './util-function.js';
+import {getListenerCloneNodes} from './util-function.js';
 
 const NUMBER_OF_DECIMALS = 5;
 
 const resetButton = document.querySelector('.ad-form__reset');
 const adFormNode = document.querySelector('.ad-form');
 const address = document.querySelector('#address');
-const succes = document.querySelector('#success').content.querySelector('.success');
+const success = document.querySelector('#success').content.querySelector('.success');
 const error = document.querySelector('#error').content.querySelector('.error');
 
 const MapSetting = {
@@ -143,9 +143,9 @@ const initMap = () => {
 
       sendData(
         () => {
-          listenerCloneNodes(succes), node.reset();
+          getListenerCloneNodes(success), node.reset();
         },
-        () => listenerCloneNodes(error),
+        () => getListenerCloneNodes(error),
         formData,
       );
     });

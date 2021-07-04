@@ -37,12 +37,14 @@ const getOfferAddPhotos = (photos) => {
 
 // проверки заполненности инфы в соответствующих элементах
 const createCardAnnouncement = ({author, offer}) => {
+  const room =  offer.rooms < 4 ? 'комнаты': 'комнат';
+  const guest = offer.guests < 2 ? 'гостя' : 'гостей';
   const popupElement = popup.cloneNode(true);
   popupElement.querySelector('.popup__title').textContent = offer.title;
   popupElement.querySelector('.popup__text--address').textContent = offer.address;
   popupElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
   popupElement.querySelector('.popup__type').textContent = OFFER_TYPE_TO_READABLE[offer.type];
-  popupElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
+  popupElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} ${room} для ${offer.guests} ${guest}`;
   popupElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
   popupElement.querySelector('.popup__features').innerHTML = '';
   popupElement.querySelector('.popup__description').textContent = offer.description;

@@ -1,5 +1,3 @@
-import './create-element.js';
-import './create-announcement.js';
 import './user-form.js';
 import {getBlockForms} from './form-disabled.js';
 import {initMap} from './map.js';
@@ -7,4 +5,4 @@ import {initMap} from './map.js';
 getBlockForms();
 
 initMap();
-// сделал как мог, как лучше - не знаю))
+// остальное пока сделал как знаю

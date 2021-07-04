@@ -2,7 +2,7 @@ const API_URL = 'https://23.javascript.pages.academy/keksobooking';
 
 const checkStatus = (response) => {
   const { status, statusText } = response;
-  if (response.status !== 200) {
+  if (!response.ok) {
     throw new Error(`${status} - ${statusText}`);
   }
 
