@@ -1,7 +1,4 @@
 const TIMEOUT_DELAY = 500;
-const KeyboardKey = {
-  ESCAPE: 'Escape',
-};
 
 const removeEmptyHtmlElements = (data) => {
   const elements = Array.from(data.children);
@@ -15,32 +12,22 @@ const removeEmptyHtmlElements = (data) => {
 const getListenerCloneNodes = (node) => {
   const cloneNode = node.cloneNode(true);
   const buttonNode = cloneNode.querySelector('.error__button');
-  document.body.insertAdjacentElement('beforeend', cloneNode);
+  const body = document.querySelector('body');
+  body.insertAdjacentElement('beforeend', cloneNode);
 
-  let onModalKeyDown = null;
-  let onModalClick = null;
-
-  const closeModal = () => {
-    cloneNode.remove();
-
-    document.removeEventListener('keydown', onModalKeyDown);
-    document.removeEventListener('click', onModalClick);
-  };
-
-  onModalKeyDown = (evt) => {
-    if (evt.key === KeyboardKey.ESCAPE && cloneNode) {
-      closeModal();
+  document.addEventListener('keydown', (evt) => {
+    if (evt.keyCode === 27 && cloneNode) {
+      cloneNode.remove();
     }
-  };
+  });
 
-  onModalClick = (evt) => {
-    if (evt.target === cloneNode || buttonNode) {
-      closeModal();
+  document.addEventListener('click', (evt) => {
+    if (evt.target === cloneNode) {
+      cloneNode.remove();
+    } else if (buttonNode) {
+      cloneNode.remove();
     }
-  };
-
-  document.addEventListener('keydown', onModalKeyDown);
-  document.addEventListener('click', onModalClick);
+  });
 };
 
 // Функция взята из интернета и доработана

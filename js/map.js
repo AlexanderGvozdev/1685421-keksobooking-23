@@ -140,7 +140,7 @@ const initMap = () => {
 
       sendData(
         () => {
-          getListenerCloneNodes(success), node.reset(), resetImage();
+          getListenerCloneNodes(success), node.reset();
         },
         () => getListenerCloneNodes(error),
         formData,
