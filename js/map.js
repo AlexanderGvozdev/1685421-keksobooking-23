@@ -2,7 +2,9 @@ import {getActiveForms} from './form-disabled.js';
 import {createCardAnnouncement} from './create-element.js';
 import {getData, sendData} from './api.js';
 import {showServerError} from './message.js';
-import {getListenerCloneNodes} from './util-function.js';
+import {getListenerCloneNodes, debounce} from './util-function.js';
+import {resetImage} from './picture.js';
+import {getFilteredOffers, filterNode} from './filter.js';
 
 const NUMBER_OF_DECIMALS = 5;
 
@@ -11,6 +13,7 @@ const adFormNode = document.querySelector('.ad-form');
 const address = document.querySelector('#address');
 const success = document.querySelector('#success').content.querySelector('.success');
 const error = document.querySelector('#error').content.querySelector('.error');
+const localOffers = [];
 
 const MapSetting = {
   LAT: 35.68951,
@@ -49,6 +52,7 @@ const initMap = () => {
     );
 
   const mapLayer = L.tileLayer(MapSetting.OSM_URL, { attribution: MapSetting.OSM_ATTRIBUTION });
+  const markers = L.layerGroup().addTo(map);
 
   // Функция генерации Иконок
   const getPinIcon = (url, width, heigth) => {
@@ -108,30 +112,23 @@ const initMap = () => {
     );
   };
 
-  // Функция рендера объектов
+  // Функция рендера объектов в попапе
   const renderOffers = (offers) => {
     offers.forEach((item) => {
-      const {lat, lng} = item.location;
+      const { lat, lng } = item.location;
       const createCustomPopup = createCardAnnouncement(item);
 
       const regularMarker = getPinMarker(
         lat,
         lng,
-        true,
+        false,
         getPinIcon(MapSetting.ICON_URL.REGULAR, MapSetting.ICON_SIZE_REGULAR.WIDTH, MapSetting.ICON_SIZE_REGULAR.HEIGHT),
       );
 
-      const marker = regularMarker;
-      marker.addTo(map).bindPopup(createCustomPopup, {
+      regularMarker.addTo(markers).bindPopup(createCustomPopup, {
         keepInView: true,
       });
     });
-  };
-
-  // Функция обрезания прилетающих объектов до заданных параметров
-  const createOffers = (offers) => {
-    const cutOffers = offers.slice(0, MapSetting.ANNOUNCEMENT_QUANTITY);
-    renderOffers(cutOffers);
   };
 
   // Функция отправки данных на сервер
@@ -143,7 +140,7 @@ const initMap = () => {
 
       sendData(
         () => {
-          getListenerCloneNodes(success), node.reset();
+          getListenerCloneNodes(success), node.reset(), resetImage();
         },
         () => getListenerCloneNodes(error),
         formData,
@@ -151,12 +148,36 @@ const initMap = () => {
     });
   };
 
+  // Функиця  очистки/фильтрации/отрисовки полученных объектов
+  const updateOffers = (offers) => {
+    markers.clearLayers(); // Очистка маркеров
+    const filteredOffers = getFilteredOffers(offers).slice(0, MapSetting.ANNOUNCEMENT_QUANTITY);
+    renderOffers(filteredOffers); // Отрисовка
+  };
+
+  // Получение объектов с сервера
+  getData(
+    (offers) => {
+      localOffers.push(...offers);
+      updateOffers(localOffers);
+    },
+    () => showServerError(MapSetting.MESSAGE_ALERT, MapSetting.MESSAGE_COLOR),
+  );
+
+  filterNode.addEventListener(
+    'change',
+    debounce(() => {
+      updateOffers(localOffers);
+    }),
+  );
+
   // Кнопка "Очистить"
   resetButton.addEventListener('click', () => {
     resetMarker();
+    filterNode.reset();
+    resetImage();
   });
 
-  getData(createOffers, () => showServerError(MapSetting.MESSAGE_ALERT, MapSetting.MESSAGE_COLOR));
   sendNewOffer(adFormNode);
   mapLayer.addTo(map);
   mainMarker.addTo(map);

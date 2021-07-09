@@ -5,4 +5,3 @@ import {initMap} from './map.js';
 getBlockForms();
 
 initMap();
-// остальное пока сделал как знаю
