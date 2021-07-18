@@ -55,27 +55,23 @@ const initMap = () => {
   const markers = L.layerGroup().addTo(map);
 
   // Функция генерации Иконок
-  const getPinIcon = (url, width, heigth) => {
-    return L.icon({
-      iconUrl: url,
-      iconSize: [width, heigth],
-      iconAnchor: [width / 2, heigth],
-    });
-  };
+  const getPinIcon = (url, width, heigth) => L.icon({
+    iconUrl: url,
+    iconSize: [width, heigth],
+    iconAnchor: [width / 2, heigth],
+  });
 
   // Функция генерации Маркеров
-  const getPinMarker = (lat, lng, boolean, icons) => {
-    return L.marker(
-      {
-        lat: lat,
-        lng: lng,
-      },
-      {
-        draggable: boolean,
-        icon: icons,
-      },
-    );
-  };
+  const getPinMarker = (lat, lng, boolean, icons) => L.marker(
+    {
+      lat: lat,
+      lng: lng,
+    },
+    {
+      draggable: boolean,
+      icon: icons,
+    },
+  );
 
   // Стили для главного Маркера
   const mainMarker = getPinMarker(

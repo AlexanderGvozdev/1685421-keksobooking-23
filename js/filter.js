@@ -26,10 +26,7 @@ const PriceValue = {
   },
 };
 
-const checkIsControlInterrelation = (controlValue, checker) => {
-  const isInterrelation = controlValue || checker;
-  return isInterrelation;
-};
+const checkIsControlInterrelation = (controlValue, checker) => controlValue || checker;
 
 const validationTypeToFunction = {
   checkType(ad) {
