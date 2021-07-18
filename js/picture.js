@@ -5,15 +5,25 @@ const userPic = document.querySelector('.ad-form-header__input');
 const userPicWrapper = document.querySelector('.ad-form-header__preview');
 const picture = document.querySelector('.ad-form__input');
 const pictureWrapper = document.querySelector('.ad-form__photo');
+const imgSize = {
+  avatar: {
+    width: 40,
+    height: 44,
+  },
+  photo: {
+    width: 70,
+    height: 70,
+  },
+};
 
 const createImgElement = (wrapper) => {
   const img = document.createElement('img');
   img.src = '';
-  img.width = 40;
-  img.height = 44;
+  img.width = imgSize.avatar.width;
+  img.height = imgSize.avatar.height;
   if (wrapper === pictureWrapper) {
-    img.width = 70;
-    img.height = 70;
+    img.width = imgSize.photo.width;
+    img.height = imgSize.photo.height;
   }
   img.alt = 'Фотография жилья';
   if (wrapper === userPicWrapper) {
