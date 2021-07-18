@@ -56,17 +56,16 @@ const initMap = () => {
 
   // Функция генерации Иконок
   const getPinIcon = (url, width, heigth) => {
-    const icons = L.icon({
+    return L.icon({
       iconUrl: url,
       iconSize: [width, heigth],
       iconAnchor: [width / 2, heigth],
     });
-    return icons;
   };
 
   // Функция генерации Маркеров
   const getPinMarker = (lat, lng, boolean, icons) => {
-    const pinMarker = L.marker(
+    return L.marker(
       {
         lat: lat,
         lng: lng,
@@ -76,8 +75,6 @@ const initMap = () => {
         icon: icons,
       },
     );
-
-    return pinMarker;
   };
 
   // Стили для главного Маркера
